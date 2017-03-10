@@ -21,6 +21,54 @@ function createTable(tableData)
 
   table.appendChild(tableBody);
   document.body.appendChild(table);
+
+  var input = document.createElement('input');
+  input.value = demoValue;
+  document.body.appendChild(input);
+}
+
+var key = {
+    LEFT:   37,
+    UP:     38,
+    RIGHT:  39,
+    DOWN:   40
+};
+
+
+function eventListener(event, obj, fn) {
+    if (window.addEventListener) {
+        //Support for modern browsers
+        obj.addEventListener(event, fn, false);
+    }
+    else {
+        //Support for IE
+        obj.attachEvent('on'+event, fn);
+    }
+}
+
+function handlekeyboardEvent(event) {
+    if (!event) 
+    {
+        event = window.event;
+    } 
+    var keycode = event.keyCode || event.which; 
+
+    switch (keycode) {
+        case key.LEFT:
+            // info.value += "LEFT ";
+            break;
+        case key.UP:
+            // info.value += "UP ";
+            break;
+        case key.RIGHT:
+            moveRight(currentFigure);
+            break;
+        case key.DOWN:
+            // info.value += "DOWN ";
+            break;
+        default:
+            break;
+    }
 }
 
 var figIvert = [
@@ -69,29 +117,29 @@ var figT = [
 
             
 var stageMatrix = [
-    [0,0,0,0,0,0,0,0,0,0],//NOT VISIBLE
-    [0,0,0,0,0,0,0,0,0,0],//NOT VISIBLE
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [1,1,1,1,1,1,1,1,1,1]//NOT VISIBLE
+    [1,0,0,0,0,0,0,0,0,0,0,1],//NOT VISIBLE
+    [1,0,0,0,0,0,0,0,0,0,0,1],//NOT VISIBLE
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1]//NOT VISIBLE
 ];
 
 function getRandomFigure()
@@ -100,7 +148,27 @@ function getRandomFigure()
     // return newFigure;
 }
 
-function createFigure(inputStage)
+function initPosition(size)
+{
+    if (size > 3)
+    {
+        var pos = [2,4];
+        return pos;
+    }
+    else
+    {
+        var pos = [2,5];
+        return pos;
+    }
+}
+
+function getSize(inputFigure)
+{
+    var size = inputFigure.length;
+    return size;
+}
+
+function createFigure()
 {
     var size;
     var newFigure = [].concat(figT);
@@ -113,7 +181,7 @@ function createFigure(inputStage)
             {
                 for(var x = 0; x < size; x++)
                 {
-                    inputStage[y+2][x+4] = newFigure[y][x];
+                    stage.matrix[y+2][x+5] = newFigure[y][x];
                 }
             }
             break;
@@ -122,26 +190,27 @@ function createFigure(inputStage)
             {
                 for(x = 0; x < size; x++)
                 {
-                    inputStage[y+2][x+4] = newFigure[y][x];
+                    stage.matrix[y+2][x+5] = newFigure[y][x];
                 }
             }
             break;
         case 4:
                 for(x = 0; x < size; x++)
                 {
-                    inputStage[2][x + 3] = newFigure[x];
+                    stage.matrix[2][x + 4] = newFigure[x];
                 }
             break;
         default:
             break;
     }
+    return newFigure;
 }
 
-function rotateLeft(inputMatrix)
+function rotateLeft(inputFigure)
 {
     var col, row, tmp, ret;
-    col = inputMatrix.length;
-    row = inputMatrix[0].length;
+    col = inputFigure.length;
+    row = inputFigure[0].length;
     tmp = [];
     ret = [];
 
@@ -150,18 +219,18 @@ function rotateLeft(inputMatrix)
         tmp = [];
         for(var y = 0; y < row; y++)
         {
-            tmp.push(inputMatrix[y][k]);
+            tmp.push(inputFigure[y][k]);
         }
         ret.push(tmp);
     }
     return ret;
 }
 
-function rotateRight(inputMatrix)
+function rotateRight(inputFigure)
 {
     var col, row, tmp, ret;
-    col = inputMatrix.length;
-    row = inputMatrix[0].length;
+    col = inputFigure.length;
+    row = inputFigure[0].length;
     tmp = [];
     ret = [];
 
@@ -170,11 +239,68 @@ function rotateRight(inputMatrix)
         tmp = [];
         for(var y = row - 1; y >= 0; y--)
         {
-            tmp.push(inputMatrix[y][k]);
+            tmp.push(inputFigure[y][k]);
         }
         ret.push(tmp);
     }
     return ret;
+}
+
+function clearFigure(inputFigure)
+{
+    for(var y = inputFigure.pos[0]; y < inputFigure.pos[0]+inputFigure.size; y++)
+    {
+        for (var x = inputFigure.pos[1]; x < inputFigure.pos[1]+inputFigure.size; x++)
+        {
+            stage.matrix[y][x] = 0;
+        }
+    }
+}
+
+function moveFigure(inputFigure, directionx, directiony)
+{
+    for(var y = 0; y < inputFigure.size; y++)
+    {
+        for (var x = 0; x < inputFigure.size; x++)
+        {
+            stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]+directionx] = inputFigure.figure[y][x];
+        }
+    }
+    inputFigure.pos[0] += directiony;
+    inputFigure.pos[1] += directionx;
+}
+
+function validMove(inputFigure, directionx, directiony)
+{
+    for(var y = 0; y < inputFigure.size; y++)
+    {
+        for (var x = 0; x < inputFigure.size; x++)
+        {
+            if(stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]+directionx] & inputFigure.figure[y][x] == 1)
+            {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+function moveRight(inputFigure)
+{
+    clearFigure(inputFigure);
+    if (validMove(inputFigure, 1, 0))
+    {
+        moveFigure(inputFigure, 1, 0);
+    }
+    else
+    {
+        moveFigure(inputFigure, 0, 0);
+    }
+}
+
+function moveLeft(inputFigure)
+{
+
 }
 
 var figTest = [
@@ -182,6 +308,8 @@ var figTest = [
     [0,0,0],
     [0,0,0]
 ];
+
+var demoValue;
 
 // var figure1 = [].concat(figT);
 // var figure2 = [].concat(figT);
@@ -201,6 +329,7 @@ var figTest = [
 function updateStage()
 {
     document.body.innerHTML = '';
+
     createTable(stage.matrix);
 }
 
@@ -209,18 +338,36 @@ var stage =
         start : function()
         {
             this.matrix = stageMatrix;
-            this.interval = setInterval(updateStage, 500);
+            this.interval = setInterval(updateStage, 100);
         }
 
-    }
+    };
 
-function component()
+function element()
 {
     this.figure = createFigure();
+    this.size = getSize(this.figure);
+    this.pos = initPosition(this.size);
+
 }
 
-stage.start();
-var currentFigure = new component();
+
+
+
+var currentFigure;
+eventListener('keydown', document, handlekeyboardEvent);
+
+
+function startGame()
+{
+    stage.start();
+    currentFigure = new element();
+}
+
+startGame();
+
+// stage.start();
+// var currentFigure = new component();
 
 
 // currentFigure = new component(30, 30, "red", 10, 120);
