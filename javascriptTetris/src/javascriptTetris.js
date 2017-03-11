@@ -55,7 +55,7 @@ function handlekeyboardEvent(event) {
 
     switch (keycode) {
         case key.LEFT:
-            // info.value += "LEFT ";
+            moveLeft(currentFigure);
             break;
         case key.UP:
             // info.value += "UP ";
@@ -64,7 +64,7 @@ function handlekeyboardEvent(event) {
             moveRight(currentFigure);
             break;
         case key.DOWN:
-            // info.value += "DOWN ";
+            moveDown(currentFigure);
             break;
         default:
             break;
@@ -248,11 +248,32 @@ function rotateRight(inputFigure)
 
 function clearFigure(inputFigure)
 {
-    for(var y = inputFigure.pos[0]; y < inputFigure.pos[0]+inputFigure.size; y++)
+    // for(var y = inputFigure.pos[0]; y < inputFigure.pos[0]+inputFigure.size; y++)
+    // {
+    //     if(y >= 22)
+    //     {
+    //         break;
+    //     }
+    //     for (var x = inputFigure.pos[1]; x < inputFigure.pos[1]+inputFigure.size; x++)
+    //     {
+    //         // if(stage.matrix[y][x] != 1)
+    //         // {
+    //             stage.matrix[y][x] = 0;
+    //         // }
+    //     }
+    // }
+    for(var y = 0; y < inputFigure.size; y++)
     {
-        for (var x = inputFigure.pos[1]; x < inputFigure.pos[1]+inputFigure.size; x++)
+        if(y + inputFigure.pos[0] >= 22)
         {
-            stage.matrix[y][x] = 0;
+            break;
+        }
+        for (var x = 0; x < inputFigure.size; x++)
+        {
+            if(stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]] & inputFigure.figure[y][x] == 1)
+            {
+                stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]] = 0;
+            }
         }
     }
 }
@@ -263,7 +284,7 @@ function moveFigure(inputFigure, directionx, directiony)
     {
         for (var x = 0; x < inputFigure.size; x++)
         {
-            stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]+directionx] = inputFigure.figure[y][x];
+            stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] += inputFigure.figure[y][x];
         }
     }
     inputFigure.pos[0] += directiony;
@@ -276,7 +297,7 @@ function validMove(inputFigure, directionx, directiony)
     {
         for (var x = 0; x < inputFigure.size; x++)
         {
-            if(stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]+directionx] & inputFigure.figure[y][x] == 1)
+            if(stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] & inputFigure.figure[y][x] == 1)
             {
                 return 0;
             }
@@ -300,14 +321,35 @@ function moveRight(inputFigure)
 
 function moveLeft(inputFigure)
 {
-
+    clearFigure(inputFigure);
+    if (validMove(inputFigure, -1, 0))
+    {
+        moveFigure(inputFigure, -1, 0);
+    }
+    else
+    {
+        moveFigure(inputFigure, 0, 0);
+    }
 }
 
-var figTest = [
-    [0,0,0],
-    [0,0,0],
-    [0,0,0]
-];
+function moveDown(inputFigure)
+{
+    clearFigure(inputFigure);
+    if (validMove(inputFigure, 0, 1))
+    {
+        moveFigure(inputFigure, 0, 1);
+    }
+    else
+    {
+        moveFigure(inputFigure, 0, 0);
+        atBottom(inputFigure);
+    }
+}
+
+function atBottom()
+{
+    currentFigure = new element();
+}
 
 var demoValue;
 
@@ -361,7 +403,8 @@ eventListener('keydown', document, handlekeyboardEvent);
 function startGame()
 {
     stage.start();
-    currentFigure = new element();
+    currentFigure = new element()
+
 }
 
 startGame();
