@@ -58,7 +58,7 @@ function handlekeyboardEvent(event) {
             moveLeft(currentFigure);
             break;
         case key.UP:
-            // info.value += "UP ";
+            rotate(currentFigure);
             break;
         case key.RIGHT:
             moveRight(currentFigure);
@@ -72,24 +72,28 @@ function handlekeyboardEvent(event) {
 }
 
 var figIvert = [
-    [0,1,0,0],
-    [0,1,0,0],
-    [0,1,0,0],
-    [0,1,0,0]
+    [0,1,0],
+    [0,1,0],
+    [0,1,0],
+    [0,1,0]
 ];
-var figIhor =
-    [1,1,1,1];
+
+var figIhor = [
+    [0,0,0,0],
+    [1,1,1,1],
+    [0,0,0,0]
+];
 
 var figL = [
-    [0,1,0],
-    [0,1,0],
-    [0,1,1]
+    [0,0,1],
+    [1,1,1],
+    [0,0,0]
 ];
 
 var figNL = [
-    [0,1,0],
-    [0,1,0],
-    [1,1,0]
+    [1,0,0],
+    [1,1,1],
+    [0,0,0]
 ];
 
 var figO = [
@@ -97,16 +101,28 @@ var figO = [
     [1,1]
 ];
 
-var figS = [
+var figSone = [
+    [0,0,0],
     [0,1,1],
-    [1,1,0],
-    [0,0,0]
+    [1,1,0]
 ];
 
-var figZ = [
+var figZone = [
+    [0,0,0],
     [1,1,0],
+    [0,1,1]
+];
+
+var figStwo = [
+    [0,1,0],
     [0,1,1],
-    [0,0,0]
+    [0,0,1]
+];
+
+var figZtwo = [
+    [0,1,0],
+    [1,1,0],
+    [1,0,0]
 ];
 
 var figT = [
@@ -142,65 +158,127 @@ var stageMatrix = [
     [1,1,1,1,1,1,1,1,1,1,1,1]//NOT VISIBLE
 ];
 
+var prevRandomNumber;
+
 function getRandomFigure()
 {
-    // var newFigure = [].concat(figT);
-    // return newFigure;
-}
-
-function initPosition(size)
-{
-    if (size > 3)
+    var theFigures = ["I","L","NL","O","S","Z","T"];
+    var randomNumber = Math.floor(Math.random() * 8);
+    while(randomNumber == prevRandomNumber)
     {
-        var pos = [2,4];
-        return pos;
+        randomNumber = Math.floor(Math.random() * 8);
     }
-    else
+    prevRandomNumber = randomNumber;
+
+    return theFigures[randomNumber];
+}
+
+function getFigure(label)
+{
+    switch(label)
     {
-        var pos = [2,5];
-        return pos;
+        case "I":
+            return [].concat(figIhor);
+            break;
+        case "L":
+            return [].concat(figL);
+            break;
+        case "NL":
+            return [].concat(figNL);
+            break;
+        case "O":
+            return [].concat(figO);
+            break;
+        case "S":
+            return [].concat(figSone);
+            break;
+        case "Z":
+            return [].concat(figZone);
+            break;
+        case "T":
+            return [].concat(figT);
+            break;
     }
 }
 
-function getSize(inputFigure)
+function initPosition(label)
 {
-    var size = inputFigure.length;
-    return size;
-}
-
-function createFigure()
-{
-    var size;
-    var newFigure = [].concat(figT);
-    size = newFigure.length;
-
-    switch(size)
+    var pos;
+    switch(label)
     {
-        case 2:
-            for(var y = 0; y < size; y++)
-            {
-                for(var x = 0; x < size; x++)
-                {
-                    stage.matrix[y+2][x+5] = newFigure[y][x];
-                }
-            }
+        case "I":
+            pos = [1, 4];
             break;
-        case 3:
-            for(y = 0; y < size; y++)
-            {
-                for(x = 0; x < size; x++)
-                {
-                    stage.matrix[y+2][x+5] = newFigure[y][x];
-                }
-            }
+        case "O":
+            pos = [2, 5];
             break;
-        case 4:
-                for(x = 0; x < size; x++)
-                {
-                    stage.matrix[2][x + 4] = newFigure[x];
-                }
+        case "S":
+            pos = [1, 4];
+            break;
+        case "Z":
+            pos = [1, 4];
             break;
         default:
+            pos = [2, 4];
+            break;
+    }
+    return pos;
+}
+
+
+function createFigure(label)
+{
+    var newFigure = getFigure(label);
+
+    sizeY = newFigure.length;
+    sizeX = newFigure[0].length;
+
+    switch(label)
+    {
+        case "I":
+            for(var y = 0; y < sizeY; y++)
+            {
+                for(var x = 0; x < sizeX; x++)
+                {
+                    stage.matrix[y+1][x+4] = newFigure[y][x];
+                }
+            }
+            break;
+        case "O":
+            for(var y = 0; y < sizeX; y++)
+            {
+                for(var x = 0; x < sizeY; x++)
+                {
+                    stage.matrix[y+2][x+5] = newFigure[y][x];
+                }
+            }
+            break;
+        case "S":
+            for(var y = 0; y < sizeX; y++)
+            {
+                for(var x = 0; x < sizeY; x++)
+                {
+                    stage.matrix[y+1][x+4] = newFigure[y][x];
+                }
+            }
+            break;
+        case "Z":
+            for(var y = 0; y < sizeX; y++)
+            {
+                for(var x = 0; x < sizeY; x++)
+                {
+                    stage.matrix[y+1][x+4] = newFigure[y][x];
+                }
+            }
+            break;
+        default:
+            for(y = 0; y < sizeY; y++)
+            {
+                for(x = 0; x < sizeX; x++)
+                {
+                    stage.matrix[y+2][x+4] = newFigure[y][x];
+                }
+            }
             break;
     }
     return newFigure;
@@ -229,46 +307,71 @@ function rotateLeft(inputFigure)
 function rotateRight(inputFigure)
 {
     var col, row, tmp, ret;
-    col = inputFigure.length;
-    row = inputFigure[0].length;
-    tmp = [];
-    ret = [];
-
-    for (var k = 0; k < col; k++)
+    switch(inputFigure.label)
     {
-        tmp = [];
-        for(var y = row - 1; y >= 0; y--)
-        {
-            tmp.push(inputFigure[y][k]);
-        }
-        ret.push(tmp);
+        case "I":
+            if(inputFigure.figure[0][1] == 1)
+            {
+                return [].concat(figIhor);
+            }
+            else
+            {
+                return [].concat(figIvert);
+            }
+            break;
+
+        case "S":
+            if(inputFigure.figure[2][0] == 1)
+            {
+                return [].concat(figStwo);
+            }
+            else
+            {
+                return [].concat(figSone);
+            }
+            break;
+
+        case "Z":
+            if(inputFigure.figure[2][1] == 1)
+            {
+                return [].concat(figZtwo);
+            }
+            else
+            {
+                return [].concat(figZone);
+            }
+            break;
+
+        default:
+            col = inputFigure.figure.length;
+            row = inputFigure.figure[0].length;
+            tmp = [];
+            ret = [];
+
+            for (var k = 0; k < col; k++)
+            {
+                tmp = [];
+                for(var y = row - 1; y >= 0; y--)
+                {
+                    tmp.push(inputFigure.figure[y][k]);
+                }
+                ret.push(tmp);
+            }
+            return ret;
+            break;
     }
     return ret;
 }
 
 function clearFigure(inputFigure)
 {
-    // for(var y = inputFigure.pos[0]; y < inputFigure.pos[0]+inputFigure.size; y++)
-    // {
-    //     if(y >= 22)
-    //     {
-    //         break;
-    //     }
-    //     for (var x = inputFigure.pos[1]; x < inputFigure.pos[1]+inputFigure.size; x++)
-    //     {
-    //         // if(stage.matrix[y][x] != 1)
-    //         // {
-    //             stage.matrix[y][x] = 0;
-    //         // }
-    //     }
-    // }
-    for(var y = 0; y < inputFigure.size; y++)
+    for(var y = 0; y < inputFigure.sizeY; y++)
     {
         if(y + inputFigure.pos[0] >= 22)
         {
             break;
         }
-        for (var x = 0; x < inputFigure.size; x++)
+        for (var x = 0; x < inputFigure.sizeX; x++)
         {
             if(stage.matrix[y + inputFigure.pos[0]][x + inputFigure.pos[1]] & inputFigure.figure[y][x] == 1)
             {
@@ -280,9 +383,9 @@ function clearFigure(inputFigure)
 
 function moveFigure(inputFigure, directionx, directiony)
 {
-    for(var y = 0; y < inputFigure.size; y++)
+    for(var y = 0; y < inputFigure.sizeY; y++)
     {
-        for (var x = 0; x < inputFigure.size; x++)
+        for (var x = 0; x < inputFigure.sizeX; x++)
         {
             stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] += inputFigure.figure[y][x];
         }
@@ -291,13 +394,13 @@ function moveFigure(inputFigure, directionx, directiony)
     inputFigure.pos[1] += directionx;
 }
 
-function validMove(inputFigure, directionx, directiony)
+function validMove(inputFigure, figure, directionx, directiony)
 {
-    for(var y = 0; y < inputFigure.size; y++)
+    for(var y = 0; y < figure.length; y++)
     {
-        for (var x = 0; x < inputFigure.size; x++)
+        for (var x = 0; x < figure[0].length; x++)
         {
-            if(stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] & inputFigure.figure[y][x] == 1)
+            if(stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] & figure[y][x] == 1)
             {
                 return 0;
             }
@@ -306,10 +409,30 @@ function validMove(inputFigure, directionx, directiony)
     return 1;
 }
 
-function moveRight(inputFigure)
+function rotate(inputFigure)
 {
     clearFigure(inputFigure);
-    if (validMove(inputFigure, 1, 0))
+    var tmpFigure = rotateRight(inputFigure);
+
+    if (validMove(inputFigure, tmpFigure, 0, 0))
+    {
+        inputFigure.figure = tmpFigure;
+        inputFigure.sizeX = inputFigure.figure[0].length;
+        inputFigure.sizeY = inputFigure.figure.length;
+        moveFigure(inputFigure, 0, 0);
+    }
+    else
+    {
+        moveFigure(inputFigure, 0, 0);
+    }
+}
+
+function moveRight(inputFigure)
+{
+
+    clearFigure(inputFigure);
+
+    if (validMove(inputFigure,inputFigure.figure, 1, 0))
     {
         moveFigure(inputFigure, 1, 0);
     }
@@ -322,7 +445,7 @@ function moveRight(inputFigure)
 function moveLeft(inputFigure)
 {
     clearFigure(inputFigure);
-    if (validMove(inputFigure, -1, 0))
+    if (validMove(inputFigure,inputFigure.figure, -1, 0))
     {
         moveFigure(inputFigure, -1, 0);
     }
@@ -335,13 +458,14 @@ function moveLeft(inputFigure)
 function moveDown(inputFigure)
 {
     clearFigure(inputFigure);
-    if (validMove(inputFigure, 0, 1))
+    if (validMove(inputFigure,inputFigure.figure, 0, 1))
     {
         moveFigure(inputFigure, 0, 1);
     }
     else
     {
         moveFigure(inputFigure, 0, 0);
+        //checkIFLINE
         atBottom(inputFigure);
     }
 }
@@ -387,9 +511,11 @@ var stage =
 
 function element()
 {
-    this.figure = createFigure();
-    this.size = getSize(this.figure);
-    this.pos = initPosition(this.size);
+    this.label = getRandomFigure();
+    this.figure = createFigure(this.label);
+    this.sizeY = this.figure.length;
+    this.sizeX = this.figure[0].length;
+    this.pos = initPosition(this.label);
 
 }
 
