@@ -402,6 +402,10 @@ function validMove(inputFigure, figure, directionx, directiony)
         {
             if(stage.matrix[y + inputFigure.pos[0]+directiony][x + inputFigure.pos[1]+directionx] & figure[y][x] == 1)
             {
+                if(directiony == 1)
+                {
+                    inputFigure.bottom = y + inputFigure.pos[0];
+                }
                 return 0;
             }
         }
@@ -465,8 +469,45 @@ function moveDown(inputFigure)
     else
     {
         moveFigure(inputFigure, 0, 0);
-        //checkIFLINE
+        checkIfLine(inputFigure);
         atBottom(inputFigure);
+    }
+}
+
+function removeLine(line)
+{
+    for(var y = line; y >= 1; y--)
+    {
+        for (var x = 0; x < 12; x++)
+        {
+            stage.matrix[y][x] = stage.matrix[y-1][x];
+        }
+    }
+}
+
+function checkIfLine(inputFigure)
+{
+    var line = inputFigure.bottom;
+    var ones =0;
+    var k =0;
+    while(k < 5)
+    {
+        ones = 0;
+        for (var x = 0; x < 12; x++)
+        {
+            if (stage.matrix[line][x] == 1) {
+                ones++;
+            }
+        }
+        if (ones >= 12)
+        {
+            removeLine(line);
+        }
+        else
+        {
+           break;
+        }
+        k++;
     }
 }
 
@@ -477,36 +518,39 @@ function atBottom()
 
 var demoValue;
 
-// var figure1 = [].concat(figT);
-// var figure2 = [].concat(figT);
-
-
-
-// var one = [].concat(figTest);
-// var line = [0,1,1];
-
-// newFigure(stage);
-// createTable(stage);
-
-// one[0] |= line;
-// createTable(one);
-// createTable(line);
-
 function updateStage()
 {
-    document.body.innerHTML = '';
-
-    createTable(stage.matrix);
+    if (debug == 1)
+    {
+        document.body.innerHTML = '';
+        createTable(stage.matrix);
+    }
+    else
+    {
+        // stage.clear();
+        // var ctx = stage.context;
+        // ctx.fillStyle = color;
+        // ctx.fillRect(0, 0, 50, 50);
+    }
 }
 
 var stage =
     {
+        canvas : document.createElement("canvas"),
         start : function()
         {
+            this.canvas.width = 800;
+            this.canvas.height = 600;
+            this.context = this.canvas.getContext("2d");
+            // document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+            document.body.appendChild(this.canvas);
             this.matrix = stageMatrix;
             this.interval = setInterval(updateStage, 100);
+        },
+        clear : function()
+        {
+            // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
-
     };
 
 function element()
@@ -516,12 +560,13 @@ function element()
     this.sizeY = this.figure.length;
     this.sizeX = this.figure[0].length;
     this.pos = initPosition(this.label);
+    this.bottom;
 
 }
 
 
 
-
+var debug = 0;
 var currentFigure;
 eventListener('keydown', document, handlekeyboardEvent);
 
@@ -534,14 +579,5 @@ function startGame()
 }
 
 startGame();
-
-// stage.start();
-// var currentFigure = new component();
-
-
-// currentFigure = new component(30, 30, "red", 10, 120);
-// myGamePiece.gravity = 0.05;
-// myScore = new component("30px", "Consolas", "black", 280, 40, "text");
-// myGameArea.start();
 
 
