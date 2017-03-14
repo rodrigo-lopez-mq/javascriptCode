@@ -527,10 +527,19 @@ function updateStage()
     }
     else
     {
-        // stage.clear();
-        // var ctx = stage.context;
-        // ctx.fillStyle = color;
-        // ctx.fillRect(0, 0, 50, 50);
+        stage.clear();
+        var ctx = stage.context;
+        //ctx.fillStyle = "#FF0000";
+        var figureImage = new Image();
+        figureImage.src = 'assets/ex.png';
+
+        // imageObj.onload = function() {
+        //     ctx.drawImage('', 69, 50);
+        // };
+        // imageObj.src = 'assets/ex.png';
+
+        ctx.drawImage(figureImage,50,50);
+        //ctx.fillRect(0, 0, 50, 50);
     }
 }
 
@@ -539,17 +548,18 @@ var stage =
         canvas : document.createElement("canvas"),
         start : function()
         {
-            this.canvas.width = 800;
-            this.canvas.height = 600;
+            this.square = 30 * sqSize;
+            this.canvas.width = 300 * sqSize;
+            this.canvas.height = 600 * sqSize;
             this.context = this.canvas.getContext("2d");
-            // document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            document.body.appendChild(this.canvas);
+            document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+            // document.body.appendChild(this.canvas);
             this.matrix = stageMatrix;
             this.interval = setInterval(updateStage, 100);
         },
         clear : function()
         {
-            // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
     };
 
@@ -567,6 +577,7 @@ function element()
 
 
 var debug = 0;
+var sqSize=1;
 var currentFigure;
 eventListener('keydown', document, handlekeyboardEvent);
 
