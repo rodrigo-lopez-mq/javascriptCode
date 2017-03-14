@@ -170,7 +170,7 @@ function getRandomFigure()
     }
     prevRandomNumber = randomNumber;
 
-    return theFigures[randomNumber];
+    return "T";//theFigures[randomNumber];
 }
 
 function getFigure(label)
@@ -223,6 +223,65 @@ function initPosition(label)
             break;
     }
     return pos;
+}
+
+function initBoardSize(label)
+{
+    var size = [];
+    switch(label)
+    {
+        case "I":
+            size = [1, 4];
+            break;
+        case "O":
+            size = [2, 5];
+            break;
+        case "S":
+            size = [1, 4];
+            break;
+        case "Z":
+            size = [1, 4];
+            break;
+        case "L":
+            size = [1, 4];
+            break;
+        case "NL":
+            size = [1, 4];
+            break;
+    }
+    return pos;
+}
+
+function initGraphic(label)
+{
+    var figureImage = new Image();
+
+    switch(label)
+    {
+        case "I":
+            figureImage.src = 'assets/i.gif';
+            break;
+        case "L":
+            figureImage.src = 'assets/l.gif';
+            break;
+        case "NL":
+            figureImage.src = 'assets/nl.gif';
+            break;
+        case "O":
+            figureImage.src = 'assets/o.gif';
+            break;
+        case "S":
+            figureImage.src = 'assets/s.gif';
+            break;
+        case "Z":
+            figureImage.src = 'assets/z.gif';
+            break;
+        case "T":
+            figureImage.src = 'assets/t.gif';
+            break;
+    }
+
+    return figureImage;
 }
 
 
@@ -528,18 +587,17 @@ function updateStage()
     else
     {
         stage.clear();
-        var ctx = stage.context;
-        //ctx.fillStyle = "#FF0000";
-        var figureImage = new Image();
-        figureImage.src = 'assets/ex.png';
+        currentFigure.update();
+        // var ctx = stage.context;
+        // ctx.fillStyle = "#FF0000";
+        // ctx.fillRect(0,0,150,75);
+        // alert("m");
+        // var ctx = stage.context;
 
-        // imageObj.onload = function() {
-        //     ctx.drawImage('', 69, 50);
-        // };
-        // imageObj.src = 'assets/ex.png';
-
-        ctx.drawImage(figureImage,50,50);
-        //ctx.fillRect(0, 0, 50, 50);
+        // var figureImage = new Image();
+        // figureImage.src = 'assets/t.gif';
+        //
+        // ctx.drawImage(figureImage,50,50);
     }
 }
 
@@ -548,9 +606,9 @@ var stage =
         canvas : document.createElement("canvas"),
         start : function()
         {
-            this.square = 30 * sqSize;
-            this.canvas.width = 300 * sqSize;
-            this.canvas.height = 600 * sqSize;
+            this.square = sqSize;
+            this.canvas.width = 300 * mlt;
+            this.canvas.height = 600 * mlt;
             this.context = this.canvas.getContext("2d");
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
             // document.body.appendChild(this.canvas);
@@ -570,14 +628,24 @@ function element()
     this.sizeY = this.figure.length;
     this.sizeX = this.figure[0].length;
     this.pos = initPosition(this.label);
-    this.bottom;
+    this.figureImage = initGraphic(this.label);
+    this.boardSize = initBoardSize(this.label);
+    this.bottom = 0;
+    this.update = function()
+    {
+        var ctx = stage.context;
+        // ctx.fillStyle = "#FF0000";
+        // ctx.fillRect(0,0,150,75);
+        ctx.drawImage(this.figureImage,this.pos[1]*sqSize,this.pos[0]*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
+    }
 
 }
 
 
 
 var debug = 0;
-var sqSize=1;
+var sqSize= 30;
+var mlt = 1;
 var currentFigure;
 eventListener('keydown', document, handlekeyboardEvent);
 
