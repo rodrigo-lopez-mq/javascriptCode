@@ -213,13 +213,13 @@ function initPosition(label)
             pos = [2, 5];
             break;
         case "S":
-            pos = [1, 4];
+            pos = [1, 5];
             break;
         case "Z":
-            pos = [1, 4];
+            pos = [1, 5];
             break;
         default:
-            pos = [2, 4];
+            pos = [2, 5];
             break;
     }
     return pos;
@@ -234,22 +234,25 @@ function initBoardSize(label)
             size = [1, 4];
             break;
         case "O":
-            size = [2, 5];
+            size = [2, 2];
             break;
         case "S":
-            size = [1, 4];
+            size = [2, 3];
             break;
         case "Z":
-            size = [1, 4];
+            size = [2, 3];
             break;
         case "L":
-            size = [1, 4];
+            size = [2, 3];
             break;
         case "NL":
-            size = [1, 4];
+            size = [2, 3];
+            break;
+        case "T":
+            size = [2, 3];
             break;
     }
-    return pos;
+    return size;
 }
 
 function initGraphic(label)
@@ -289,8 +292,8 @@ function createFigure(label)
 {
     var newFigure = getFigure(label);
 
-    sizeY = newFigure.length;
-    sizeX = newFigure[0].length;
+    var sizeY = newFigure.length;
+    var sizeX = newFigure[0].length;
 
     switch(label)
     {
@@ -308,7 +311,7 @@ function createFigure(label)
             {
                 for(var x = 0; x < sizeY; x++)
                 {
-                    stage.matrix[y+2][x+5] = newFigure[y][x];
+                    stage.matrix[y+2][x+6] = newFigure[y][x];
                 }
             }
             break;
@@ -317,7 +320,7 @@ function createFigure(label)
             {
                 for(var x = 0; x < sizeY; x++)
                 {
-                    stage.matrix[y+1][x+4] = newFigure[y][x];
+                    stage.matrix[y+1][x+5] = newFigure[y][x];
                 }
             }
             break;
@@ -326,7 +329,7 @@ function createFigure(label)
             {
                 for(var x = 0; x < sizeY; x++)
                 {
-                    stage.matrix[y+1][x+4] = newFigure[y][x];
+                    stage.matrix[y+1][x+5] = newFigure[y][x];
                 }
             }
             break;
@@ -335,7 +338,7 @@ function createFigure(label)
             {
                 for(x = 0; x < sizeX; x++)
                 {
-                    stage.matrix[y+2][x+4] = newFigure[y][x];
+                    stage.matrix[y+2][x+5] = newFigure[y][x];
                 }
             }
             break;
@@ -586,7 +589,9 @@ function updateStage()
     }
     else
     {
+
         stage.clear();
+
         currentFigure.update();
         // var ctx = stage.context;
         // ctx.fillStyle = "#FF0000";
@@ -606,7 +611,7 @@ var stage =
         canvas : document.createElement("canvas"),
         start : function()
         {
-            this.square = sqSize;
+
             this.canvas.width = 300 * mlt;
             this.canvas.height = 600 * mlt;
             this.context = this.canvas.getContext("2d");
@@ -634,18 +639,15 @@ function element()
     this.update = function()
     {
         var ctx = stage.context;
-        // ctx.fillStyle = "#FF0000";
-        // ctx.fillRect(0,0,150,75);
-        ctx.drawImage(this.figureImage,this.pos[1]*sqSize,this.pos[0]*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
+        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
     }
-
 }
 
 
 
 var debug = 0;
-var sqSize= 30;
-var mlt = 1;
+var mlt = 0.8;
+var sqSize= 30 * mlt;
 var currentFigure;
 eventListener('keydown', document, handlekeyboardEvent);
 
@@ -653,6 +655,7 @@ eventListener('keydown', document, handlekeyboardEvent);
 function startGame()
 {
     stage.start();
+
     currentFigure = new element()
 
 }
