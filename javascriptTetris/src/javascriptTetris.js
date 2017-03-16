@@ -575,6 +575,7 @@ function checkIfLine(inputFigure)
 
 function atBottom()
 {
+    currentFigure.renderToStage();
     currentFigure = new element();
 }
 
@@ -589,20 +590,15 @@ function updateStage()
     }
     else
     {
+        // stage.clear();
+        figureRender.clear();
 
-        stage.clear();
-
+        var ctxFig = figureRender.context;
+        // ctxFig.fillStyle = "#94d3ab";
+        // ctxFig.fillRect(0,0, this.width, this.height);
         currentFigure.update();
-        // var ctx = stage.context;
-        // ctx.fillStyle = "#FF0000";
-        // ctx.fillRect(0,0,150,75);
-        // alert("m");
-        // var ctx = stage.context;
 
-        // var figureImage = new Image();
-        // figureImage.src = 'assets/t.gif';
-        //
-        // ctx.drawImage(figureImage,50,50);
+
     }
 }
 
@@ -611,12 +607,15 @@ var stage =
         canvas : document.createElement("canvas"),
         start : function()
         {
-
             this.canvas.width = 300 * mlt;
             this.canvas.height = 600 * mlt;
+            this.canvas.style.zIndex   = 0;
+            this.canvas.style.left = "300px";
+            this.canvas.style.top = "20px";
+            this.canvas.style.position = "absolute";
+            this.canvas.style.backgroundColor = "#f1f1f1";
             this.context = this.canvas.getContext("2d");
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-            // document.body.appendChild(this.canvas);
             this.matrix = stageMatrix;
             this.interval = setInterval(updateStage, 100);
         },
@@ -625,6 +624,28 @@ var stage =
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
     };
+
+var figureRender =
+{
+    canvas : document.createElement("canvas"),
+    start : function()
+    {
+        this.canvas.width = 300 * mlt;
+        this.canvas.height = 600 * mlt;
+        this.canvas.style.zIndex   = 1;
+        this.canvas.style.left = "300px";
+        this.canvas.style.top = "20px";
+        this.canvas.style.position = "absolute";
+        // this.canvas.style.backgroundColor = "#f1f1f1";
+        this.context = this.canvas.getContext("2d");
+        // this.context.globalAlpha=0.2;
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    },
+    clear : function()
+    {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+};
 
 function element()
 {
@@ -636,9 +657,14 @@ function element()
     this.figureImage = initGraphic(this.label);
     this.boardSize = initBoardSize(this.label);
     this.bottom = 0;
-    this.update = function()
+    this.renderToStage = function()
     {
         var ctx = stage.context;
+        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
+    }
+    this.update = function()
+    {
+        var ctx = figureRender.context;
         ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
     }
 }
@@ -655,7 +681,7 @@ eventListener('keydown', document, handlekeyboardEvent);
 function startGame()
 {
     stage.start();
-
+    figureRender.start();
     currentFigure = new element()
 
 }
