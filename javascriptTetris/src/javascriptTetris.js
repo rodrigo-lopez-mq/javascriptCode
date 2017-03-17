@@ -170,7 +170,7 @@ function getRandomFigure()
     }
     prevRandomNumber = randomNumber;
 
-    return "T";//theFigures[randomNumber];
+    return "O";//theFigures[randomNumber];
 }
 
 function getFigure(label)
@@ -311,7 +311,7 @@ function createFigure(label)
             {
                 for(var x = 0; x < sizeY; x++)
                 {
-                    stage.matrix[y+2][x+6] = newFigure[y][x];
+                    stage.matrix[y+2][x+5] = newFigure[y][x];
                 }
             }
             break;
@@ -531,7 +531,7 @@ function moveDown(inputFigure)
     else
     {
         moveFigure(inputFigure, 0, 0);
-        checkIfLine(inputFigure);
+        // checkIfLine(inputFigure);
         atBottom(inputFigure);
     }
 }
@@ -545,6 +545,7 @@ function removeLine(line)
             stage.matrix[y][x] = stage.matrix[y-1][x];
         }
     }
+    stage.deleteRow(line);
 }
 
 function checkIfLine(inputFigure)
@@ -573,9 +574,10 @@ function checkIfLine(inputFigure)
     }
 }
 
-function atBottom()
+function atBottom(inputFigure)
 {
     currentFigure.renderToStage();
+    checkIfLine(inputFigure);
     currentFigure = new element();
 }
 
@@ -593,7 +595,7 @@ function updateStage()
         // stage.clear();
         figureRender.clear();
 
-        var ctxFig = figureRender.context;
+        // var ctxFig = figureRender.context;
         // ctxFig.fillStyle = "#94d3ab";
         // ctxFig.fillRect(0,0, this.width, this.height);
         currentFigure.update();
@@ -618,6 +620,12 @@ var stage =
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
             this.matrix = stageMatrix;
             this.interval = setInterval(updateStage, 100);
+        },
+        deleteRow : function(line)
+        {
+            // this.context.clearRect(0, (line - 2) * sqSize, this.canvas.width, sqSize);
+            var canvasContent = this.context.getImageData(0, 0, this.canvas.width, ((line - 2) * sqSize)-1);
+            this.context.putImageData(canvasContent, 0, sqSize);
         },
         clear : function()
         {
