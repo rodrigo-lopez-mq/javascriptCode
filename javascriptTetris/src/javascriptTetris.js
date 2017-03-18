@@ -170,7 +170,7 @@ function getRandomFigure()
     }
     prevRandomNumber = randomNumber;
 
-    return "O";//theFigures[randomNumber];
+    return "I";//theFigures[randomNumber];
 }
 
 function getFigure(label)
@@ -253,6 +253,36 @@ function initBoardSize(label)
             break;
     }
     return size;
+}
+
+function getBoardPos(label, pos)
+{
+    var gPos = [];
+    switch(label)
+    {
+        case "I":
+            gPos = [pos[0] + 1, pos[1]];
+            break;
+        case "O":
+            gPos = [pos[0], pos[1]];
+            break;
+        case "S":
+            gPos = [pos[0] + 1, pos[1]];
+            break;
+        case "Z":
+            gPos = [pos[0] + 1, pos[1]];
+            break;
+        case "L":
+            gPos = [pos[0], pos[1]];
+            break;
+        case "NL":
+            gPos = [pos[0], pos[1]];
+            break;
+        case "T":
+            gPos = [pos[0], pos[1]];
+            break;
+    }
+    return gPos;
 }
 
 function initGraphic(label)
@@ -486,6 +516,7 @@ function rotate(inputFigure)
         inputFigure.sizeX = inputFigure.figure[0].length;
         inputFigure.sizeY = inputFigure.figure.length;
         moveFigure(inputFigure, 0, 0);
+        inputFigure.rotate(1);
     }
     else
     {
@@ -665,14 +696,22 @@ function element()
     this.figureImage = initGraphic(this.label);
     this.boardSize = initBoardSize(this.label);
     this.bottom = 0;
+    this.state = 0;
     this.renderToStage = function()
     {
         var ctx = stage.context;
+        // var onBoardPos = getBoardPos(this.label, this.pos);
         ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
     }
+    this.rotate = function (dir)
+    {
+        var ctx = figureRender.context;
+
+    },
     this.update = function()
     {
         var ctx = figureRender.context;
+        // var onBoardPos = getBoardPos(this.label, this.pos);
         ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
     }
 }
