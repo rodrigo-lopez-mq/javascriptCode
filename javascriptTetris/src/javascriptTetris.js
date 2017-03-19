@@ -155,6 +155,7 @@ var stageMatrix = [
     [1,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,1],
     [1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1],//NOT VISIBLE
     [1,1,1,1,1,1,1,1,1,1,1,1]//NOT VISIBLE
 ];
 
@@ -163,14 +164,14 @@ var prevRandomNumber;
 function getRandomFigure()
 {
     var theFigures = ["I","L","NL","O","S","Z","T"];
-    var randomNumber = Math.floor(Math.random() * 8);
+    var randomNumber = Math.floor(Math.random() * 7);
     while(randomNumber == prevRandomNumber)
     {
-        randomNumber = Math.floor(Math.random() * 8);
+        randomNumber = Math.floor(Math.random() * 7);
     }
     prevRandomNumber = randomNumber;
 
-    return "I";//theFigures[randomNumber];
+    return theFigures[randomNumber];
 }
 
 function getFigure(label)
@@ -225,66 +226,6 @@ function initPosition(label)
     return pos;
 }
 
-function initBoardSize(label)
-{
-    var size = [];
-    switch(label)
-    {
-        case "I":
-            size = [1, 4];
-            break;
-        case "O":
-            size = [2, 2];
-            break;
-        case "S":
-            size = [2, 3];
-            break;
-        case "Z":
-            size = [2, 3];
-            break;
-        case "L":
-            size = [2, 3];
-            break;
-        case "NL":
-            size = [2, 3];
-            break;
-        case "T":
-            size = [2, 3];
-            break;
-    }
-    return size;
-}
-
-function getBoardPos(label, pos)
-{
-    var gPos = [];
-    switch(label)
-    {
-        case "I":
-            gPos = [pos[0] + 1, pos[1]];
-            break;
-        case "O":
-            gPos = [pos[0], pos[1]];
-            break;
-        case "S":
-            gPos = [pos[0] + 1, pos[1]];
-            break;
-        case "Z":
-            gPos = [pos[0] + 1, pos[1]];
-            break;
-        case "L":
-            gPos = [pos[0], pos[1]];
-            break;
-        case "NL":
-            gPos = [pos[0], pos[1]];
-            break;
-        case "T":
-            gPos = [pos[0], pos[1]];
-            break;
-    }
-    return gPos;
-}
-
 function initGraphic(label)
 {
     var figureImage = new Image();
@@ -317,6 +258,133 @@ function initGraphic(label)
     return figureImage;
 }
 
+function getRotated(inputFigure)
+{
+    var figureImage = new Image();
+    switch(inputFigure.label)
+    {
+        case "I":
+            if (inputFigure.state == 0)
+            {
+                figureImage.src = 'assets/i2.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 1;
+            }
+            else
+            {
+                figureImage.src = 'assets/i.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 0;
+            }
+            break;
+        case "L":
+            switch(inputFigure.state)
+            {
+                case 0:
+                    figureImage.src = 'assets/l2.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 1;
+                    break;
+                case 1:
+                    figureImage.src = 'assets/l3.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 2;
+                    break;
+                case 2:
+                    figureImage.src = 'assets/l4.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 3;
+                    break;
+                case 3:
+                    figureImage.src = 'assets/l.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 0;
+                    break;
+            }
+            break;
+        case "NL":
+            switch(inputFigure.state)
+            {
+                case 0:
+                    figureImage.src = 'assets/nl2.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 1;
+                    break;
+                case 1:
+                    figureImage.src = 'assets/nl3.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 2;
+                    break;
+                case 2:
+                    figureImage.src = 'assets/nl4.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 3;
+                    break;
+                case 3:
+                    figureImage.src = 'assets/nl.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 0;
+                    break;
+            }
+            break;
+        case "O":
+
+            break;
+        case "S":
+            if (inputFigure.state == 0)
+            {
+                figureImage.src = 'assets/s2.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 1;
+            }
+            else
+            {
+                figureImage.src = 'assets/s.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 0;
+            }
+            break;
+        case "Z":
+            if (inputFigure.state == 0)
+            {
+                figureImage.src = 'assets/z2.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 1;
+            }
+            else
+            {
+                figureImage.src = 'assets/z.gif';
+                inputFigure.figureImage = figureImage;
+                inputFigure.state = 0;
+            }
+            break;
+        case "T":
+            switch(inputFigure.state)
+            {
+                case 0:
+                    figureImage.src = 'assets/t2.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 1;
+                    break;
+                case 1:
+                    figureImage.src = 'assets/t3.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 2;
+                    break;
+                case 2:
+                    figureImage.src = 'assets/t4.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 3;
+                    break;
+                case 3:
+                    figureImage.src = 'assets/t.gif';
+                    inputFigure.figureImage = figureImage;
+                    inputFigure.state = 0;
+                    break;
+            }
+            break;
+    }
+}
 
 function createFigure(label)
 {
@@ -488,7 +556,7 @@ function moveFigure(inputFigure, directionx, directiony)
 
 function validMove(inputFigure, figure, directionx, directiony)
 {
-    for(var y = 0; y < figure.length; y++)
+    for(var y = figure.length - 1; y >= 0; y--)
     {
         for (var x = 0; x < figure[0].length; x++)
         {
@@ -516,7 +584,7 @@ function rotate(inputFigure)
         inputFigure.sizeX = inputFigure.figure[0].length;
         inputFigure.sizeY = inputFigure.figure.length;
         moveFigure(inputFigure, 0, 0);
-        inputFigure.rotate(1);
+        getRotated(inputFigure);
     }
     else
     {
@@ -623,16 +691,14 @@ function updateStage()
     }
     else
     {
-        // stage.clear();
         figureRender.clear();
-
-        // var ctxFig = figureRender.context;
-        // ctxFig.fillStyle = "#94d3ab";
-        // ctxFig.fillRect(0,0, this.width, this.height);
         currentFigure.update();
-
-
     }
+}
+
+function moveDownGravity()
+{
+    moveDown(currentFigure);
 }
 
 var stage =
@@ -640,21 +706,22 @@ var stage =
         canvas : document.createElement("canvas"),
         start : function()
         {
+            this.takeDownTime = 700;
             this.canvas.width = 300 * mlt;
             this.canvas.height = 600 * mlt;
             this.canvas.style.zIndex   = 0;
-            this.canvas.style.left = "300px";
-            this.canvas.style.top = "20px";
+            this.canvas.style.left = "50%";
+            this.canvas.style.top = "10%";
             this.canvas.style.position = "absolute";
             this.canvas.style.backgroundColor = "#f1f1f1";
             this.context = this.canvas.getContext("2d");
             document.body.insertBefore(this.canvas, document.body.childNodes[0]);
             this.matrix = stageMatrix;
-            this.interval = setInterval(updateStage, 100);
+            this.interval = setInterval(updateStage, 40);
+            this.intervalDown = setInterval(moveDownGravity, this.takeDownTime);
         },
         deleteRow : function(line)
         {
-            // this.context.clearRect(0, (line - 2) * sqSize, this.canvas.width, sqSize);
             var canvasContent = this.context.getImageData(0, 0, this.canvas.width, ((line - 2) * sqSize)-1);
             this.context.putImageData(canvasContent, 0, sqSize);
         },
@@ -672,12 +739,10 @@ var figureRender =
         this.canvas.width = 300 * mlt;
         this.canvas.height = 600 * mlt;
         this.canvas.style.zIndex   = 1;
-        this.canvas.style.left = "300px";
-        this.canvas.style.top = "20px";
+        this.canvas.style.left = "50%";
+        this.canvas.style.top = "10%";
         this.canvas.style.position = "absolute";
-        // this.canvas.style.backgroundColor = "#f1f1f1";
         this.context = this.canvas.getContext("2d");
-        // this.context.globalAlpha=0.2;
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     },
     clear : function()
@@ -694,29 +759,19 @@ function element()
     this.sizeX = this.figure[0].length;
     this.pos = initPosition(this.label);
     this.figureImage = initGraphic(this.label);
-    this.boardSize = initBoardSize(this.label);
     this.bottom = 0;
     this.state = 0;
     this.renderToStage = function()
     {
         var ctx = stage.context;
-        // var onBoardPos = getBoardPos(this.label, this.pos);
-        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
+        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.sizeX * sqSize, this.sizeY * sqSize);
     }
-    this.rotate = function (dir)
-    {
-        var ctx = figureRender.context;
-
-    },
     this.update = function()
     {
         var ctx = figureRender.context;
-        // var onBoardPos = getBoardPos(this.label, this.pos);
-        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.boardSize[1] * sqSize, this.boardSize[0] * sqSize);
+        ctx.drawImage(this.figureImage, (this.pos[1]-1)*sqSize,(this.pos[0]-2)*sqSize, this.sizeX * sqSize, this.sizeY * sqSize);
     }
 }
-
-
 
 var debug = 0;
 var mlt = 0.8;
