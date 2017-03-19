@@ -5,30 +5,7 @@
     <option name="CUSTOM_SCOPE_NAME" value="Current File" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30176a62-eb75-4f61-8dfe-881d23aa72d4" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/i - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/l - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/nl - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/o - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/s - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/t - Copy.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascriptTetris/assets/z - Copy.gif" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/i.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/i.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/i2.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/i2.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/l.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/l.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/l2.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/l2.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/l3.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/l3.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/l4.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/l4.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/nl.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/nl.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/nl2.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/nl2.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/nl3.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/nl3.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/nl4.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/nl4.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/assets/t.gif" afterPath="$PROJECT_DIR$/javascriptTetris/assets/t.gif" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/index.html" afterPath="$PROJECT_DIR$/javascriptTetris/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/main.css" afterPath="$PROJECT_DIR$/javascriptTetris/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascriptTetris/src/javascriptTetris.js" afterPath="$PROJECT_DIR$/javascriptTetris/src/javascriptTetris.js" />
-    </list>
+    <list default="true" id="30176a62-eb75-4f61-8dfe-881d23aa72d4" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -308,12 +285,12 @@
       <workItem from="1489619466854" duration="4909000" />
       <workItem from="1489718292014" duration="3105000" />
       <workItem from="1489858328175" duration="2470000" />
-      <workItem from="1489876032082" duration="5936000" />
+      <workItem from="1489876032082" duration="6268000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="54442000" />
+    <option name="totallyTimeSpent" value="54774000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -326,7 +303,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1456" height="886" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16431594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.49717912" order="6" side_tool="false" content_ui="tabs" />
